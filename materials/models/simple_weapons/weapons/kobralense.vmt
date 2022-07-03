@@ -1,0 +1,6 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models\tnb\weapons\kobralense"
+	"$additive" "1"
+	"$selfillum" "1"
+}
