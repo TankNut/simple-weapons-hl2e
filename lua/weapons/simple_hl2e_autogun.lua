@@ -6,8 +6,6 @@ DEFINE_BASECLASS("simple_base_scoped")
 
 SWEP.Base = "simple_base_scoped"
 
-SWEP.RenderGroup = RENDERGROUP_OPAQUE
-
 SWEP.PrintName = "Portable Autogun"
 SWEP.Category = "Simple Weapons: Half-Life 2 Extended"
 
@@ -28,68 +26,54 @@ SWEP.LowerHoldType = "physgun"
 SWEP.Firemode = 0
 
 SWEP.Primary = {
-	Ammo = "AR2AltFire",
+	Ammo = "AR2",
 
-	ClipSize = -1,
-	DefaultClip = 3,
+	ClipSize = 30,
+	DefaultClip = 30,
 
-	Damage = 120,
-	Delay = 1.4,
+	Damage = 40,
+	Delay = 0.3,
 
 	Range = 2000,
 	Accuracy = 12,
 
-	RangeModifier = 0.9,
+	RangeModifier = 1,
 
 	Recoil = {
-		MinAng = Angle(1.4, -0.6, 0),
-		MaxAng = Angle(1.8, 0.6, 0),
-		Punch = 0.6,
-		Ratio = 0.2
+		MinAng = Angle(1.4, -1, 0),
+		MaxAng = Angle(1.8, 1, 0),
+		Punch = 0.4,
+		Ratio = 0.6
+	},
+
+	Reload = {
+		Time = 1,
+		Sound = "NPC_SScanner.DeployMine"
 	},
 
 	TracerName = "",
 	Sound = "NPC_Combine_Cannon.FireBullet"
 }
 
-SWEP.ViewOffset = Vector(0, 4, -3)
+SWEP.ViewOffset = Vector(0, 4, -4)
 
-SWEP.ScopeZoom = {2, 6}
+SWEP.ScopeZoom = 3
 SWEP.ScopeSound = "NPC_CombineCamera.Click"
 
-function SWEP:CanPrimaryAttack()
-	local ok = BaseClass.CanPrimaryAttack(self)
-
-	if not ok then
-		return false
-	end
-
-	if InfiniteAmmo:GetInt() == 0 and self:GetOwner():GetAmmoCount(self.Primary.Ammo) < 1 then
-		self:EmitSound("buttons/combine_button_locked.wav", 75, 100, 0.7, CHAN_STATIC)
-
-		self:SetNextPrimaryFire(CurTime() + 0.8)
-
-		self.Primary.Automatic = false
-
-		return false
-	end
-
-	return true
-end
-
 function SWEP:ConsumeAmmo()
-	if InfiniteAmmo:GetInt() == 0 then
-		self:GetOwner():RemoveAmmo(1, self.Primary.Ammo)
-	end
+	self:TakePrimaryAmmo(3)
 end
 
-function SWEP:EmitFireSound()
-	self:EmitSound(self.Primary.Sound)
+function SWEP:TranslateWeaponAnim(act)
+	if act == ACT_VM_RELOAD then
+		return
+	end
+
+	return act
 end
 
 function SWEP:ModifyBulletTable(bullet)
 	bullet.Callback = function(attacker, tr, dmginfo)
-		dmginfo:SetDamageType(DMG_AIRBOAT + DMG_BLAST)
 		dmginfo:ScaleDamage(self:GetDamageFalloff(tr.StartPos:Distance(tr.HitPos)))
 
 		if game.SinglePlayer() then
@@ -104,23 +88,127 @@ function SWEP:DoBeamEffect(vec)
 	util.ParticleTracerEx("Weapon_Combine_Ion_Cannon", self:GetOwner():GetShootPos(), Vector(vec), true, self:EntIndex(), 1)
 end
 
-function SWEP:CanReload()
-	return false
-end
-
 if CLIENT then
+	local constant = Angle(0, -0.003, 0)
+
+	local function FormatViewModelAttachment(nFOV, vOrigin, bFrom)
+		local vEyePos = EyePos()
+		local aEyesRot = EyeAngles()
+		local vOffset = vOrigin - vEyePos
+		local vForward = aEyesRot:Forward()
+
+		local nViewX = math.tan(nFOV * math.pi / 360)
+
+		if (nViewX == 0) then
+			vForward:Mul(vForward:Dot(vOffset))
+			vEyePos:Add(vForward)
+
+			return vEyePos
+		end
+
+		-- FIXME: LocalPlayer():GetFOV() should be replaced with EyeFOV() when it's binded
+		local nWorldX = math.tan(LocalPlayer():GetFOV() * math.pi / 360)
+
+		if (nWorldX == 0) then
+			vForward:Mul(vForward:Dot(vOffset))
+			vEyePos:Add(vForward)
+
+			return vEyePos
+		end
+
+		local vRight = aEyesRot:Right()
+		local vUp = aEyesRot:Up()
+
+		if (bFrom) then
+			local nFactor = nWorldX / nViewX
+			vRight:Mul(vRight:Dot(vOffset) * nFactor)
+			vUp:Mul(vUp:Dot(vOffset) * nFactor)
+		else
+			local nFactor = nViewX / nWorldX
+			vRight:Mul(vRight:Dot(vOffset) * nFactor)
+			vUp:Mul(vUp:Dot(vOffset) * nFactor)
+		end
+
+		vForward:Mul(vForward:Dot(vOffset))
+
+		vEyePos:Add(vRight)
+		vEyePos:Add(vUp)
+		vEyePos:Add(vForward)
+
+		return vEyePos
+	end
+
+	local beam = Material("effects/blueblacklargebeam")
+	local sprite = CreateMaterial("simple_hl2e_autogun_sprite", "UnlitGeneric", {
+		["$basetexture"] = "sprites/blueflare1",
+		["$additive"] = 1,
+		["$translucent"] = 1,
+		["$vertexcolor"] = 1
+	})
+
+	function SWEP:DrawBeam(start, endpos)
+		local length = start:Distance(endpos)
+		local offset = CurTime() * 30
+
+		render.SetMaterial(beam)
+		render.StartBeam(2)
+			render.AddBeam(start, 5, offset, color_white)
+			render.AddBeam(endpos, 5, offset + length / 100, Color(0, 0, 0, 0))
+		render.EndBeam()
+
+		render.SetMaterial(sprite)
+		render.DrawSprite(start, 30, 30, color_white)
+	end
+
 	function SWEP:PreDrawViewModel(vm, wep, ply)
+		local att = vm:GetAttachment(1) -- I don't know why but without this the beam effect breaks completely
+
+		if self:GetLowered() or not self:IsReady() then
+			return
+		end
+
+		local offset = vm:WorldToLocalAngles(att.Ang)
+
+		local diff = offset - constant
+		local dir = (vm:GetAngles() + diff + ply:GetViewPunchAngles()):Forward()
+
+		local tr = util.TraceLine({
+			start = ply:GetShootPos(),
+			endpos = FormatViewModelAttachment(self.ViewModelFOV, ply:GetShootPos() + dir * 56756, true),
+			filter = {ply},
+			mask = MASK_SHOT
+		})
+
 		cam.Start3D()
-			vm:GetAttachment(1) -- I don't know why but without this the beam effect breaks completely
+			cam.IgnoreZ(true)
+
+			self:DrawBeam(att.Pos, tr.HitPos)
 		cam.End3D()
 
 		cam.IgnoreZ(true)
 	end
 
-	function SWEP:CustomAmmoDisplay()
-		return {
-			Draw = true,
-			PrimaryClip = self:GetOwner():GetAmmoCount(self.Primary.Ammo)
-		}
+	function SWEP:PostDrawTranslucentRenderables()
+		if not self:GetOwner():ShouldDrawLocalPlayer() then
+			return
+		end
+
+		if self:GetLowered() or not self:IsReady() then
+			return
+		end
+
+		local ply = self:GetOwner()
+
+		local att = self:GetAttachment(1)
+		local dir = (ply:GetAimVector():Angle() + ply:GetViewPunchAngles()):Forward()
+
+		local tr = util.TraceLine({
+			start = ply:GetShootPos(),
+			endpos = ply:GetShootPos() + dir * 56756,
+			filter = {ply},
+			mask = MASK_SHOT
+		})
+
+		self:DrawBeam(att.Pos, tr.HitPos)
 	end
 end
