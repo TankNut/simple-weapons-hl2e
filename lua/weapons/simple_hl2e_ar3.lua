@@ -6,7 +6,7 @@ SWEP.Base = "simple_base"
 
 SWEP.RenderGroup = RENDERGROUP_BOTH
 
-SWEP.PrintName = "Pulse Machine Gun"
+SWEP.PrintName = "AR3 OISAW"
 SWEP.Category = "Simple Weapons: Half-Life 2 Extended"
 
 SWEP.Slot = 2
@@ -101,4 +101,17 @@ function SWEP:SetupMove(ply, mv)
 	else
 		BaseClass.SetupMove(self, ply, mv)
 	end
+end
+
+function SWEP:DoImpactEffect(tr, dmgtype)
+	if not IsFirstTimePredicted() then
+		return
+	end
+
+	local effect = EffectData()
+
+	effect:SetOrigin(tr.HitPos + tr.HitNormal)
+	effect:SetNormal(tr.HitNormal)
+
+	util.Effect("AR2Impact", effect)
 end

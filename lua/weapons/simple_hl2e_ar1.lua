@@ -4,7 +4,7 @@ SWEP.Base = "simple_base"
 
 SWEP.RenderGroup = RENDERGROUP_BOTH
 
-SWEP.PrintName = "Pulse PDW"
+SWEP.PrintName = "AR1 PDW"
 SWEP.Category = "Simple Weapons: Half-Life 2 Extended"
 
 SWEP.Slot = 2
@@ -58,4 +58,17 @@ function SWEP:AlternateAttack()
 	self:SetFiremode(self:GetFiremode() == -1 and 3 or -1)
 
 	self:EmitSound("Weapon_SMG1.Special1")
+end
+
+function SWEP:DoImpactEffect(tr, dmgtype)
+	if not IsFirstTimePredicted() then
+		return
+	end
+
+	local effect = EffectData()
+
+	effect:SetOrigin(tr.HitPos + tr.HitNormal)
+	effect:SetNormal(tr.HitNormal)
+
+	util.Effect("AR2Impact", effect)
 end
