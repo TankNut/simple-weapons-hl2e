@@ -49,8 +49,8 @@ SWEP.Primary = {
 		Sound = "NPC_SScanner.DeployMine"
 	},
 
-	TracerName = "",
-	Sound = "NPC_Combine_Cannon.FireBullet"
+	Sound = "NPC_Combine_Cannon.FireBullet",
+	TracerName = ""
 }
 
 SWEP.ViewOffset = Vector(0, 4, -4)
@@ -74,10 +74,8 @@ function SWEP:ModifyBulletTable(bullet)
 	bullet.Callback = function(attacker, tr, dmginfo)
 		dmginfo:ScaleDamage(self:GetDamageFalloff(tr.StartPos:Distance(tr.HitPos)))
 
-		if game.SinglePlayer() then
+		if SERVER then
 			self:CallOnClient("DoBeamEffect", tostring(tr.HitPos))
-		else
-			self:DoBeamEffect(tostring(tr.HitPos))
 		end
 	end
 end
