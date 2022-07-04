@@ -1,7 +1,5 @@
 AddCSLuaFile()
 
-simple_weapons.Include("Convars")
-
 DEFINE_BASECLASS("simple_base_scoped")
 
 SWEP.Base = "simple_base_scoped"
