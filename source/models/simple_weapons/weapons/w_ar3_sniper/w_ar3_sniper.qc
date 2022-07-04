@@ -1,8 +1,8 @@
 // Created by Crowbar 0.63
 
-$modelname "simple_weapons/weapons/w_ar3.mdl"
+$modelname "simple_weapons/weapons/w_ar3_sniper.mdl"
 
-$body "studio" "w_ar3.smd"
+$body "studio" "w_ar3_sniper.smd"
 
 $surfaceprop "weapon"
 $contents "solid"
@@ -16,7 +16,7 @@ $cdmaterials "models\simple_weapons\weapons\"
 $attachment "muzzle" "ValveBiped.Weapon_bone" 24.00 0.80 -4.95 rotate 11 2 177
 
 $sequence "idle" {
-	"w_ar3_anims\idle.smd"
+	"w_ar3_sniper_anims\idle.smd"
 	activity "ACT_VM_IDLE" 1
 	fadein 0.2
 	fadeout 0.2
@@ -25,7 +25,7 @@ $sequence "idle" {
 }
 
 $sequence "attack1" {
-	"w_ar3_anims\attack1.smd"
+	"w_ar3_sniper_anims\attack1.smd"
 	activity "ACT_RANGE_ATTACK_SMG1" 1
 	{ event AE_NPC_MUZZLEFLASH 0 "COMBINE MUZZLE" }
 	fadein 0.2
@@ -34,14 +34,14 @@ $sequence "attack1" {
 }
 
 $sequence "attackoffcenter" {
-	"w_ar3_anims\attackoffcenter.smd"
+	"w_ar3_sniper_anims\attackoffcenter.smd"
 	{ event AE_NPC_MUZZLEFLASH 0 "COMBINE MUZZLE" }
 	fadein 0.2
 	fadeout 0.2
 	fps 20
 }
 
-$collisionmodel "w_ar3_physics.smd"
+$collisionmodel "w_ar3_sniper_physics.smd"
 {
 	$mass 8
 	$inertia 1
