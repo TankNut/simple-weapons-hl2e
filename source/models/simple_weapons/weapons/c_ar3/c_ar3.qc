@@ -83,7 +83,8 @@ $sequence "fire01" {
 	{ event AE_MUZZLEFLASH 0 "COMBINE MUZZLE" }
 	fadein 0.2
 	fadeout 0.2
-	fps 40
+	snap
+	fps 30
 }
 
 $sequence "draw" {
