@@ -2,7 +2,7 @@ AddCSLuaFile()
 
 SWEP.Base = "simple_base"
 
-SWEP.PrintName = "Pulse-PDW"
+SWEP.PrintName = "Pulse PDW"
 SWEP.Category = "Simple Weapons: Half-Life 2 Extended"
 
 SWEP.Slot = 2
@@ -31,8 +31,6 @@ SWEP.Primary = {
 	Delay = 60 / 700,
 	BurstDelay = 60 / 850,
 	BurstEndDelay = 0.3,
-
-	AutoBurst = true,
 
 	Range = 700,
 	Accuracy = 12,
