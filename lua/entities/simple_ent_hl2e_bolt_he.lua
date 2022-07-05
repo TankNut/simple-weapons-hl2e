@@ -60,6 +60,12 @@ end
 
 if SERVER then
 	function ENT:Touch(ent)
+		if self:GetTouchTrace().HitSky then
+			SafeRemoveEntity(self)
+
+			return
+		end
+
 		if bit.band(ent:GetSolidFlags(), FSOLID_VOLUME_CONTENTS + FSOLID_TRIGGER) > 0 then
 			local takedamage = ent:GetSaveTable().m_takedamage
 
