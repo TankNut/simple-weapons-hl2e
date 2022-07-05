@@ -25,6 +25,7 @@ SWEP.Firemode = -1
 
 SWEP.Primary = {
 	Ammo = "AR2",
+	Cost = 1,
 
 	ClipSize = 30,
 	DefaultClip = 60,
@@ -61,7 +62,11 @@ function SWEP:AlternateAttack()
 end
 
 function SWEP:DoImpactEffect(tr, dmgtype)
-	if not IsFirstTimePredicted() then
+	if tr.HitSky then
+		return
+	end
+
+	if not game.SinglePlayer() and IsFirstTimePredicted() then
 		return
 	end
 

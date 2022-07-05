@@ -23,6 +23,7 @@ SWEP.Firemode = 0
 
 SWEP.Primary = {
 	Ammo = "AR2",
+	Cost = 2,
 
 	ClipSize = 20,
 	DefaultClip = 40,
@@ -51,12 +52,12 @@ SWEP.ViewOffset = Vector(0, 0, -1)
 SWEP.ScopeZoom = 4.5
 SWEP.ScopeSound = "NPC_CombineCamera.Click"
 
-function SWEP:ConsumeAmmo()
-	self:TakePrimaryAmmo(2)
-end
-
 function SWEP:DoImpactEffect(tr, dmgtype)
-	if not IsFirstTimePredicted() then
+	if tr.HitSky then
+		return
+	end
+
+	if not game.SinglePlayer() and IsFirstTimePredicted() then
 		return
 	end
 

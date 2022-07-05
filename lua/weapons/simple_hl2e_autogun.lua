@@ -25,6 +25,7 @@ SWEP.Firemode = 0
 
 SWEP.Primary = {
 	Ammo = "AR2",
+	Cost = 3,
 
 	ClipSize = 30,
 	DefaultClip = 60,
@@ -57,10 +58,6 @@ SWEP.ViewOffset = Vector(0, 4, -4)
 
 SWEP.ScopeZoom = 3
 SWEP.ScopeSound = "NPC_CombineCamera.Click"
-
-function SWEP:ConsumeAmmo()
-	self:TakePrimaryAmmo(3)
-end
 
 function SWEP:TranslateWeaponAnim(act)
 	if act == ACT_VM_RELOAD then
