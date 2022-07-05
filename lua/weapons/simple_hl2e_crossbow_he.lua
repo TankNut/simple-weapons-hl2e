@@ -25,7 +25,6 @@ SWEP.Firemode = 0
 
 SWEP.Primary = {
 	Ammo = "SMG1_Grenade",
-	Cost = 1,
 
 	ClipSize = 1,
 	DefaultClip = 3,

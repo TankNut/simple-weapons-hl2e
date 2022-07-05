@@ -31,7 +31,7 @@ SWEP.Primary = {
 	Damage = 32,
 	Delay = 60 / 200,
 
-	Range = 3000,
+	Range = 2000,
 	Accuracy = 12,
 
 	UnscopedRange = 200,
@@ -47,7 +47,8 @@ SWEP.Primary = {
 	},
 
 	Sound = "Weapon_AR2.Single",
-	TracerName = "AirboatGunTracer"
+	TracerName = "AirboatGunTracer",
+	TracerFrequency = 1
 }
 
 SWEP.ViewOffset = Vector(0, 0, -1)
