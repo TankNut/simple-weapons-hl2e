@@ -34,6 +34,9 @@ SWEP.Primary = {
 	Range = 3000,
 	Accuracy = 12,
 
+	UnscopedRange = 200,
+	UnscopedAccuracy = 12,
+
 	RangeModifier = 0.98,
 
 	Recoil = {
@@ -49,7 +52,7 @@ SWEP.Primary = {
 
 SWEP.ViewOffset = Vector(0, 0, -1)
 
-SWEP.ScopeZoom = 4.5
+SWEP.ScopeZoom = 4
 SWEP.ScopeSound = "NPC_CombineCamera.Click"
 
 function SWEP:DoImpactEffect(tr, dmgtype)
