@@ -47,8 +47,7 @@ SWEP.Primary = {
 	},
 
 	Sound = "Weapon_AR2.Single",
-	TracerName = "AirboatGunTracer",
-	TracerFrequency = 1
+	TracerName = "AirboatGunTracer"
 }
 
 SWEP.ViewOffset = Vector(0, 0, -1)

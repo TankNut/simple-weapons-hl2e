@@ -52,8 +52,7 @@ SWEP.Primary = {
 	},
 
 	Sound = "NPC_Sniper.FireBullet",
-	TracerName = "AirboatGunTracer",
-	TracerFrequency = 1
+	TracerName = "AirboatGunTracer"
 }
 
 SWEP.ScopeZoom = 9
@@ -70,9 +69,6 @@ function SWEP:ModifyBulletTable(bullet)
 			sound.Play("NPC_Sniper.SonicBoom", tr.StartPos + tr.Normal * dist * 0.5)
 		end)
 	end
-end
-
-function SWEP:EmitEmptySound()
 end
 
 function SWEP:DoImpactEffect(tr, dmgtype)

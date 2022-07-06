@@ -59,14 +59,6 @@ SWEP.ViewOffset = Vector(0, 4, -4)
 SWEP.ScopeZoom = 3
 SWEP.ScopeSound = "NPC_CombineCamera.Click"
 
-function SWEP:TranslateWeaponAnim(act)
-	if act == ACT_VM_RELOAD then
-		return
-	end
-
-	return act
-end
-
 function SWEP:ModifyBulletTable(bullet)
 	bullet.Callback = function(attacker, tr, dmginfo)
 		dmginfo:ScaleDamage(self:GetDamageFalloff(tr.StartPos:Distance(tr.HitPos)))
@@ -75,6 +67,14 @@ function SWEP:ModifyBulletTable(bullet)
 			self:CallOnClient("DoBeamEffect", tostring(tr.HitPos))
 		end
 	end
+end
+
+function SWEP:TranslateWeaponAnim(act)
+	if act == ACT_VM_RELOAD then
+		return
+	end
+
+	return act
 end
 
 function SWEP:DoBeamEffect(vec)
@@ -94,12 +94,11 @@ if CLIENT then
 
 	function SWEP:DrawBeam(start, endpos)
 		local length = start:Distance(endpos)
-		local offset = CurTime() * 30
 
 		render.SetMaterial(beam)
 		render.StartBeam(2)
-			render.AddBeam(start, 5, offset, color_white)
-			render.AddBeam(endpos, 5, offset + length / 100, Color(0, 0, 0, 0))
+			render.AddBeam(start, 5, 0, color_white)
+			render.AddBeam(endpos, 5, length / 64, Color(0, 0, 0, 0))
 		render.EndBeam()
 
 		render.SetMaterial(sprite)
