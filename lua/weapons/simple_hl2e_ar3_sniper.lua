@@ -2,7 +2,7 @@ AddCSLuaFile()
 
 SWEP.Base = "simple_base_scoped"
 
-SWEP.PrintName = "CIMR"
+SWEP.PrintName = "AR3 DMR"
 SWEP.Category = "Simple Weapons: Half-Life 2 Extended"
 
 SWEP.Slot = 3
