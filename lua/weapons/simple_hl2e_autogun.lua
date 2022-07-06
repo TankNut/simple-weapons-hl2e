@@ -84,53 +84,6 @@ end
 if CLIENT then
 	local constant = Angle(0, -0.003, 0)
 
-	local function FormatViewModelAttachment(nFOV, vOrigin, bFrom)
-		local vEyePos = EyePos()
-		local aEyesRot = EyeAngles()
-		local vOffset = vOrigin - vEyePos
-		local vForward = aEyesRot:Forward()
-
-		local nViewX = math.tan(nFOV * math.pi / 360)
-
-		if (nViewX == 0) then
-			vForward:Mul(vForward:Dot(vOffset))
-			vEyePos:Add(vForward)
-
-			return vEyePos
-		end
-
-		-- FIXME: LocalPlayer():GetFOV() should be replaced with EyeFOV() when it's binded
-		local nWorldX = math.tan(LocalPlayer():GetFOV() * math.pi / 360)
-
-		if (nWorldX == 0) then
-			vForward:Mul(vForward:Dot(vOffset))
-			vEyePos:Add(vForward)
-
-			return vEyePos
-		end
-
-		local vRight = aEyesRot:Right()
-		local vUp = aEyesRot:Up()
-
-		if (bFrom) then
-			local nFactor = nWorldX / nViewX
-			vRight:Mul(vRight:Dot(vOffset) * nFactor)
-			vUp:Mul(vUp:Dot(vOffset) * nFactor)
-		else
-			local nFactor = nViewX / nWorldX
-			vRight:Mul(vRight:Dot(vOffset) * nFactor)
-			vUp:Mul(vUp:Dot(vOffset) * nFactor)
-		end
-
-		vForward:Mul(vForward:Dot(vOffset))
-
-		vEyePos:Add(vRight)
-		vEyePos:Add(vUp)
-		vEyePos:Add(vForward)
-
-		return vEyePos
-	end
-
 	local beam = Material("effects/blueblacklargebeam")
 	local sprite = CreateMaterial("simple_hl2e_autogun_sprite", "UnlitGeneric", {
 		["$basetexture"] = "sprites/blueflare1",
@@ -167,7 +120,7 @@ if CLIENT then
 
 		local tr = util.TraceLine({
 			start = ply:GetShootPos(),
-			endpos = FormatViewModelAttachment(self.ViewModelFOV, ply:GetShootPos() + dir * 56756, true),
+			endpos = simple_weapons.FormatViewModelAttachment(self.ViewModelFOV, ply:GetShootPos() + dir * 56756, true),
 			filter = {ply},
 			mask = MASK_SHOT
 		})
