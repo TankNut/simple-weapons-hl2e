@@ -76,8 +76,6 @@ function SWEP:FireWeapon()
 		ent:Spawn()
 		ent:Activate()
 	end
-
-	self:GetViewModel():SetSkin(0)
 end
 
 function SWEP:TranslateWeaponAnim(act)
