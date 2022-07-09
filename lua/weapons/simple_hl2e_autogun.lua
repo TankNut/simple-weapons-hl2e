@@ -92,17 +92,24 @@ if CLIENT then
 		["$vertexcolor"] = 1
 	})
 
-	function SWEP:DrawBeam(start, endpos)
+	function SWEP:DrawBeam(start, endpos, view)
 		local length = start:Distance(endpos)
+		local width = 6
+
+		if view then
+			local const = math.pi / 360
+
+			width = (math.tan(self.ViewModelTargetFOV * const) / math.tan(self.ViewModelFOV * const)) * width
+		end
 
 		render.SetMaterial(beam)
 		render.StartBeam(2)
-			render.AddBeam(start, 5, 0, color_white)
-			render.AddBeam(endpos, 5, length / 64, Color(0, 0, 0, 0))
+			render.AddBeam(start, width, 0, color_white)
+			render.AddBeam(endpos, width, length / 64, Color(0, 0, 0, 0))
 		render.EndBeam()
 
 		render.SetMaterial(sprite)
-		render.DrawSprite(start, 30, 30, color_white)
+		render.DrawSprite(start, width * 6, width * 6, color_white)
 	end
 
 	function SWEP:PreDrawViewModel(vm, wep, ply)
@@ -127,7 +134,7 @@ if CLIENT then
 		cam.Start3D()
 			cam.IgnoreZ(true)
 
-			self:DrawBeam(att.Pos, tr.HitPos)
+			self:DrawBeam(att.Pos, tr.HitPos, true)
 		cam.End3D()
 
 		cam.IgnoreZ(true)
