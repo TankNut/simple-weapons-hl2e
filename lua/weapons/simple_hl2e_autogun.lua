@@ -97,22 +97,24 @@ if CLIENT then
 
 	function SWEP:DrawBeam(start, endpos, view)
 		local length = start:Distance(endpos)
-		local width = 6
+		local beamSize = 5
+		local spriteSize = 30
 
 		if view then
 			local const = math.pi / 360
 
-			width = (math.tan(self.ViewModelTargetFOV * const) / math.tan(self.ViewModelFOV * const)) * width
+			beamSize = (math.tan(self.ViewModelTargetFOV * const) / math.tan(self.ViewModelFOV * const)) * 6
+			spriteSize = (math.tan(self.ViewModelTargetFOV * const) / math.tan(self.ViewModelFOV * const)) * 30
 		end
 
 		render.SetMaterial(beam)
 		render.StartBeam(2)
-			render.AddBeam(start, width, 0, color_white)
-			render.AddBeam(endpos, width, length / 64, Color(0, 0, 0, 0))
+			render.AddBeam(start, beamSize, 0, color_white)
+			render.AddBeam(endpos, beamSize, length / 64, Color(0, 0, 0, 0))
 		render.EndBeam()
 
 		render.SetMaterial(sprite)
-		render.DrawSprite(start, width * 6, width * 6, color_white)
+		render.DrawSprite(start, spriteSize, spriteSize, color_white)
 	end
 
 	function SWEP:PreDrawViewModel(vm, wep, ply)
