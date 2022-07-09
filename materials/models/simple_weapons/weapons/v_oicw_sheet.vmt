@@ -1,7 +1,7 @@
 "VertexLitGeneric"
 {
-	"$baseTexture" "Models/Weapons/V_oicw/v_oicw_sheet"
-	"$bumpmap" "Models/Weapons/v_oicw/v_oicw_sheet_normal"
+	"$baseTexture" "models/simple_weapons/weapons/v_oicw_sheet"
+	"$bumpmap" "models/simple_weapons/weapons/v_oicw_sheet_normal"
 	//"$envmap" "env_cubemap"
 	//"$normalmapalphaenvmapmask" 1
 	"$selfillum" "1"

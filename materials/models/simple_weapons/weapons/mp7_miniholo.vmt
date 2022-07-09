@@ -1,5 +1,5 @@
 VertexLitGeneric
 {
-	"$basetexture" 					"models\tnb\weapons\mp7\mp7_miniholo"
+	"$basetexture" 					"models\simple_weapons\weapons\mp7_miniholo"
 
 }
