@@ -1,0 +1,14 @@
+{
+	"title": "Simple Weapons: Half-Life 2 Extended",
+	"type":	"weapon",
+	"tags":	["fun", "roleplay"],
+	"ignore":
+	[
+		"*.bat",
+		"*.jpg",
+		"*.md",
+		".git*",
+		"source/*",
+		"LICENSE"
+	]
+}
