@@ -52,6 +52,14 @@ SWEP.Primary = {
 
 SWEP.ViewOffset = Vector(0, 0, -0.5)
 
+SWEP.NPCData = {
+	Burst = {3, 3},
+	Delay = SWEP.Primary.BurstDelay,
+	Rest = {SWEP.Primary.BurstEndDelay, SWEP.Primary.BurstEndDelay * 2}
+}
+
+list.Add("NPCUsableWeapons", {class = "simple_hl2e_ar1", title = "Simple Weapons: " .. SWEP.PrintName})
+
 function SWEP:AlternateAttack()
 	self.Primary.Automatic = false
 

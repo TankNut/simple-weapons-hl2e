@@ -54,6 +54,27 @@ SWEP.Secondary = {
 	Ammo = "SMG1_Grenade"
 }
 
+SWEP.NPCData = {
+	Burst = {2, 5},
+	Delay = SWEP.Primary.Delay,
+	Rest = {SWEP.Primary.Delay * 5, SWEP.Primary.Delay * 6}
+}
+
+list.Add("NPCUsableWeapons", {class = "simple_hl2e_oicw", title = "Simple Weapons: " .. SWEP.PrintName})
+
+sound.Add({
+	name = "Simple_Weapon_OICW.Single",
+	channel = CHAN_WEAPON,
+	volume = 0.4,
+	level = 140,
+	pitch = {95, 105},
+	sound = {
+		")simple_weapons/weapons/oicw/ar1_1.wav",
+		")simple_weapons/weapons/oicw/ar1_2.wav",
+		")simple_weapons/weapons/oicw/ar1_3.wav"
+	}
+})
+
 function SWEP:CanAlternateAttack()
 	if not self:CanPrimaryAttack() then
 		return
@@ -108,16 +129,3 @@ function SWEP:AlternateAttack()
 	self:SetNextIdle(CurTime() + self:SequenceDuration())
 	self:SetNextPrimaryFire(CurTime() + 0.5)
 end
-
-sound.Add({
-	name = "Simple_Weapon_OICW.Single",
-	channel = CHAN_WEAPON,
-	volume = 0.4,
-	level = 140,
-	pitch = {95, 105},
-	sound = {
-		")simple_weapons/weapons/oicw/ar1_1.wav",
-		")simple_weapons/weapons/oicw/ar1_2.wav",
-		")simple_weapons/weapons/oicw/ar1_3.wav"
-	}
-})

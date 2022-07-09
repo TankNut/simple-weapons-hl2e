@@ -1,5 +1,7 @@
 AddCSLuaFile()
 
+DEFINE_BASECLASS("simple_base_scoped")
+
 SWEP.Base = "simple_base_scoped"
 
 SWEP.PrintName = "AR3 DMR"
@@ -54,6 +56,20 @@ SWEP.ViewOffset = Vector(0, 0, -1)
 
 SWEP.ScopeZoom = 4
 SWEP.ScopeSound = "NPC_CombineCamera.Click"
+
+SWEP.NPCData = {
+	Burst = {1, 1},
+	Delay = SWEP.Primary.Delay,
+	Rest = {SWEP.Primary.Delay * 2, SWEP.Primary.Delay * 3}
+}
+
+list.Add("NPCUsableWeapons", {class = "simple_hl2e_ar3_sniper", title = "Simple Weapons: " .. SWEP.PrintName})
+
+if SERVER then
+	function SWEP:GetNPCBulletSpread(prof)
+		return BaseClass.GetNPCBulletSpread(self, prof) * 0.5
+	end
+end
 
 function SWEP:DoImpactEffect(tr, dmgtype)
 	if tr.HitSky then

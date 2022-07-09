@@ -46,6 +46,14 @@ SWEP.Primary = {
 
 SWEP.ScopeZoom = 4.5
 
+SWEP.NPCData = {
+	Burst = {1, 1},
+	Delay = SWEP.Primary.Delay,
+	Rest = {SWEP.Primary.Delay, SWEP.Primary.Delay * 2}
+}
+
+list.Add("NPCUsableWeapons", {class = "simple_hl2e_crossbow_he", title = "Simple Weapons: " .. SWEP.PrintName})
+
 function SWEP:EmitFireSound()
 	self:EmitSound("Weapon_Crossbow.Single")
 	self:EmitSound("Weapon_Crossbow.BoltFly")
@@ -63,7 +71,7 @@ function SWEP:FireWeapon()
 	if SERVER then
 		local ent = ents.Create("simple_ent_hl2e_bolt_he")
 
-		local ang = ply:GetAimVector():Angle() + ply:GetViewPunchAngles() - Angle(2, 0, 0)
+		local ang = self:GetShootDir():Angle() - Angle(2, 0, 0)
 		local dir = ang:Forward()
 
 		ent:SetPos(ply:GetShootPos())

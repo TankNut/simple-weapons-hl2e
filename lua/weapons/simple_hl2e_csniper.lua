@@ -58,6 +58,20 @@ SWEP.Primary = {
 SWEP.ScopeZoom = 9
 SWEP.ScopeSound = "NPC_CombineCamera.Click"
 
+SWEP.NPCData = {
+	Burst = {1, 1},
+	Delay = SWEP.Primary.Delay,
+	Rest = {SWEP.Primary.Delay * 2, SWEP.Primary.Delay * 4}
+}
+
+list.Add("NPCUsableWeapons", {class = "simple_hl2e_csniper", title = "Simple Weapons: " .. SWEP.PrintName})
+
+if SERVER then
+	function SWEP:GetNPCBulletSpread(prof)
+		return 0
+	end
+end
+
 function SWEP:ModifyBulletTable(bullet)
 	bullet.Callback = function(attacker, tr, dmginfo)
 		dmginfo:ScaleDamage(self:GetDamageFalloff(tr.StartPos:Distance(tr.HitPos)))

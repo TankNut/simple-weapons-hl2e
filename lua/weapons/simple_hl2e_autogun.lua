@@ -59,6 +59,9 @@ SWEP.ViewOffset = Vector(0, 4, -4)
 SWEP.ScopeZoom = 3
 SWEP.ScopeSound = "NPC_CombineCamera.Click"
 
+game.AddParticles("particles/weapon_fx.pcf")
+PrecacheParticleSystem("Weapon_Combine_Ion_Cannon")
+
 function SWEP:ModifyBulletTable(bullet)
 	bullet.Callback = function(attacker, tr, dmginfo)
 		dmginfo:ScaleDamage(self:GetDamageFalloff(tr.StartPos:Distance(tr.HitPos)))

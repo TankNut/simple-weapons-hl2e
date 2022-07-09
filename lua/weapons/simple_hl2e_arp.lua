@@ -54,6 +54,14 @@ SWEP.Primary = {
 
 SWEP.ViewOffset = Vector(0, 0, 0)
 
+SWEP.NPCData = {
+	Burst = {2, 3},
+	Delay = 0.5,
+	Rest = {SWEP.Primary.Delay * 2, SWEP.Primary.Delay * 3}
+}
+
+list.Add("NPCUsableWeapons", {class = "simple_hl2e_arp", title = "Simple Weapons: " .. SWEP.PrintName})
+
 function SWEP:DoImpactEffect(tr, dmgtype)
 	if tr.HitSky then
 		return

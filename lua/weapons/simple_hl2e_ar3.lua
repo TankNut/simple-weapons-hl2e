@@ -52,6 +52,14 @@ SWEP.Primary = {
 
 SWEP.ViewOffset = Vector(0, 0, -0.5)
 
+SWEP.NPCData = {
+	Burst = {10, 25},
+	Delay = SWEP.Primary.Delay,
+	Rest = {0.5, 1.5}
+}
+
+list.Add("NPCUsableWeapons", {class = "simple_hl2e_ar3", title = "Simple Weapons: " .. SWEP.PrintName})
+
 function SWEP:SetupDataTables()
 	BaseClass.SetupDataTables(self)
 
@@ -72,6 +80,18 @@ function SWEP:OnHolster(removing, ply)
 	self:StopSound(self.Primary.Sound)
 end
 
+function SWEP:OwnerChanged()
+	BaseClass.OwnerChanged(self)
+
+	local ply = self:GetOwner()
+
+	if IsValid(ply) and ply:IsNPC() then
+		hook.Add("Think", self, self.NPCThink)
+	else
+		hook.Remove("Think", self)
+	end
+end
+
 function SWEP:EmitFireSound()
 	if not self:GetIsFiring() then
 		self:EmitSound(self.Primary.Sound)
@@ -89,6 +109,15 @@ function SWEP:Think()
 
 		self:SetIsFiring(false)
 		self:SetNextPrimaryFire(CurTime() + 0.5)
+	end
+end
+
+function SWEP:NPCThink()
+	if self:GetIsFiring() and CurTime() > self:GetNextPrimaryFire() + engine.TickInterval() then
+		self:EmitSound("simple_weapons/weapons/tyrant_attackend.wav")
+		self:StopSound(self.Primary.Sound)
+
+		self:SetIsFiring(false)
 	end
 end
 
