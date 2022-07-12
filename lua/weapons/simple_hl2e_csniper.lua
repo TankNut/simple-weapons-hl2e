@@ -111,7 +111,7 @@ if CLIENT then
 	local beamColor = Color(0, 100, 255)
 	local spriteColor = Color(50, 190, 255)
 
-	function SWEP:DoDrawCrosshair(x, y)
+	function SWEP:ShouldHideCrosshair()
 		return true
 	end
 
