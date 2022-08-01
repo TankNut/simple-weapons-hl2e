@@ -4,8 +4,6 @@ simple_weapons.Include("Convars")
 
 SWEP.Base = "simple_base"
 
-SWEP.RenderGroup = RENDERGROUP_BOTH
-
 SWEP.PrintName = "OICW"
 SWEP.Category = "Simple Weapons: Half-Life 2 Extended"
 
