@@ -94,8 +94,16 @@ function SWEP:TranslateWeaponAnim(act)
 end
 
 function SWEP:CanAlternateAttack()
-	if not self:CanPrimaryAttack() then
-		return
+	if (self:GetLowered() or not self:IsReady()) and not self:IsReloading() then
+		if self:GetOwner():GetInfoNum("simple_weapons_disable_raise", 0) == 0 then
+			self:SetLower(false)
+		end
+
+		return false
+	end
+
+	if self:IsReloading() then
+		return false
 	end
 
 	if InfiniteAmmo:GetInt() == 0 and self:GetOwner():GetAmmoCount(self.Secondary.Ammo) < 1 then
@@ -145,5 +153,5 @@ function SWEP:AlternateAttack()
 	end
 
 	self:SetNextIdle(CurTime() + self:SequenceDuration())
-	self:SetNextPrimaryFire(CurTime() + 0.5)
+	self:SetNextAlternateAttack(CurTime() + 1)
 end
