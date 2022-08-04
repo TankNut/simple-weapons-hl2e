@@ -1,0 +1,15 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models/simple_weapons/weapons/armtexture"
+	"$bumpmap" "models/simple_weapons/weapons/armtexture_normal"
+
+	"$phong" 1
+	"$phongboost" "2"
+	"$phongexponenttexture" "models/simple_weapons/weapons/armtexture_exp"
+	"$phongalbedotint" "1"										
+	"$phongfresnelranges"	"[.1 .5 1.0]"
+
+	"$rimlight" "1"
+	"$rimlightexponent" "300"
+	"$rimlightboost" "0.1"
+}
