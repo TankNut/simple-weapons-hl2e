@@ -44,7 +44,7 @@ SWEP.Primary = {
 		Ratio = 0.4
 	},
 
-	Sound = "Simple_Weapon_OICW.Single",
+	Sound = "Simple_Weapons_OICW.Single",
 	TracerName = "Tracer"
 }
 
@@ -61,7 +61,7 @@ SWEP.NPCData = {
 list.Add("NPCUsableWeapons", {class = "simple_hl2e_oicw", title = "Simple Weapons: " .. SWEP.PrintName})
 
 sound.Add({
-	name = "Simple_Weapon_OICW.Single",
+	name = "Simple_Weapons_OICW.Single",
 	channel = CHAN_WEAPON,
 	volume = 0.4,
 	level = 140,
