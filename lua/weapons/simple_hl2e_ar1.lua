@@ -60,7 +60,7 @@ SWEP.NPCData = {
 
 list.Add("NPCUsableWeapons", {class = "simple_hl2e_ar1", title = "Simple Weapons: " .. SWEP.PrintName})
 
-function SWEP:AlternateAttack()
+function SWEP:AltFire()
 	self.Primary.Automatic = false
 
 	self:SetFiremode(self:GetFiremode() == -1 and 3 or -1)

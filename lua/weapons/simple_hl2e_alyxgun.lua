@@ -61,52 +61,6 @@ SWEP.NPCData = {
 
 list.Add("NPCUsableWeapons", {class = "simple_hl2e_alyxgun", title = "Simple Weapons: " .. SWEP.PrintName})
 
-sound.Add({
-	name = "Simple_Weapons_AlyxGun.Reload",
-	channel = CHAN_ITEM,
-	volume = 0.5,
-	level = 75,
-	sound = "simple_weapons/weapons/alyxgun/alyxgun_reload.wav"
-})
-
-sound.Add({
-	name = "Simple_Weapons_AlyxGun.Single",
-	channel = CHAN_WEAPON,
-	volume = 1,
-	level = 140,
-	pitch = {98, 102},
-	sound = {
-		")simple_weapons/weapons/alyxgun/alyxgun_fire2.wav",
-		")simple_weapons/weapons/alyxgun/alyxgun_fire2a.wav",
-		")simple_weapons/weapons/alyxgun/alyxgun_fire2b.wav"
-	}
-})
-
-sound.Add({
-	name = "Simple_Weapons_AlyxGun.Special1",
-	channel = CHAN_WEAPON,
-	volume = 0.7,
-	level = 75,
-	sound = ")simple_weapons/weapons/alyxgun/alyxgun_switch_burst.wav"
-})
-
-sound.Add({
-	name = "Simple_Weapons_AlyxGun.Special2",
-	channel = CHAN_WEAPON,
-	volume = 0.7,
-	level = 75,
-	sound = ")simple_weapons/weapons/alyxgun/alyxgun_switch_single.wav"
-})
-
-sound.Add({
-	name = "Simple_Weapons_AlyxGun.Burst",
-	channel = CHAN_WEAPON,
-	volume = 0.7,
-	level = 140,
-	pitch = {98, 105},
-	sound = "^simple_weapons/weapons/alyxgun/alyxgun_fire3.wav"
-})
-
 function SWEP:SetupDataTables()
 	BaseClass.SetupDataTables(self)
 
@@ -115,7 +69,7 @@ function SWEP:SetupDataTables()
 	self:AddNetworkVar("Float", "DeployEndTime")
 end
 
-function SWEP:CanAlternateAttack()
+function SWEP:CanAltFire()
 	if self:IsReloading() then
 		return false
 	end
@@ -123,7 +77,7 @@ function SWEP:CanAlternateAttack()
 	return true
 end
 
-function SWEP:AlternateAttack()
+function SWEP:AltFire()
 	self.Primary.Automatic = false
 
 	self:SetDeployed(not self:GetDeployed())
@@ -151,11 +105,11 @@ function SWEP:AlternateAttack()
 		end
 	end
 
-	local duration = CurTime() + self:SequenceDuration()
+	local time = CurTime() + self:SequenceDuration()
 
-	self:SetNextIdle(duration)
-	self:SetNextPrimaryFire(duration)
-	self:SetNextAlternateAttack(duration)
+	self:SetNextIdle(time)
+	self:SetNextFire(time)
+	self:SetNextAltFire(time)
 end
 
 function SWEP:EmitFireSound()
@@ -225,3 +179,49 @@ if CLIENT then
 		self:DrawModel()
 	end
 end
+
+sound.Add({
+	name = "Simple_Weapons_AlyxGun.Reload",
+	channel = CHAN_ITEM,
+	volume = 0.5,
+	level = 75,
+	sound = "simple_weapons/weapons/alyxgun/alyxgun_reload.wav"
+})
+
+sound.Add({
+	name = "Simple_Weapons_AlyxGun.Single",
+	channel = CHAN_WEAPON,
+	volume = 1,
+	level = 140,
+	pitch = {98, 102},
+	sound = {
+		")simple_weapons/weapons/alyxgun/alyxgun_fire2.wav",
+		")simple_weapons/weapons/alyxgun/alyxgun_fire2a.wav",
+		")simple_weapons/weapons/alyxgun/alyxgun_fire2b.wav"
+	}
+})
+
+sound.Add({
+	name = "Simple_Weapons_AlyxGun.Special1",
+	channel = CHAN_WEAPON,
+	volume = 0.7,
+	level = 75,
+	sound = ")simple_weapons/weapons/alyxgun/alyxgun_switch_burst.wav"
+})
+
+sound.Add({
+	name = "Simple_Weapons_AlyxGun.Special2",
+	channel = CHAN_WEAPON,
+	volume = 0.7,
+	level = 75,
+	sound = ")simple_weapons/weapons/alyxgun/alyxgun_switch_single.wav"
+})
+
+sound.Add({
+	name = "Simple_Weapons_AlyxGun.Burst",
+	channel = CHAN_WEAPON,
+	volume = 0.7,
+	level = 140,
+	pitch = {98, 105},
+	sound = "^simple_weapons/weapons/alyxgun/alyxgun_fire3.wav"
+})

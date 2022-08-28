@@ -108,7 +108,7 @@ function SWEP:Think()
 		self:StopSound(self.Primary.Sound)
 
 		self:SetIsFiring(false)
-		self:SetNextPrimaryFire(CurTime() + 0.5)
+		self:SetNextFire(CurTime() + 0.5)
 	end
 end
 
