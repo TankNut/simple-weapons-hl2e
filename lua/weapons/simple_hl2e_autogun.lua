@@ -129,9 +129,13 @@ if CLIENT then
 		local diff = offset - constant
 		local dir = (vm:GetAngles() + diff + ply:GetViewPunchAngles()):Forward()
 
+		local const = math.pi / 360
+		local fov1, fov2 = self.ViewModelTargetFOV, self.ViewModelFOV
+		local ratio = math.tan(math.min(fov1, fov2) * const) / math.tan(math.max(fov1, fov2) * const)
+
 		local tr = util.TraceLine({
 			start = ply:GetShootPos(),
-			endpos = simple_weapons.FormatViewModelAttachment(self.ViewModelFOV, ply:GetShootPos() + dir * 56756, true),
+			endpos = simple_weapons.FormatViewModelAttachment(self.ViewModelFOV * ratio, ply:GetShootPos() + dir * 56756, true),
 			filter = {ply},
 			mask = MASK_SHOT
 		})
