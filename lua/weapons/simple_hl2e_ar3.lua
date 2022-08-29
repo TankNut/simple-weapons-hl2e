@@ -103,7 +103,7 @@ end
 function SWEP:Think()
 	BaseClass.Think(self)
 
-	if self:GetIsFiring() and CurTime() > self:GetNextPrimaryFire() + engine.TickInterval() then
+	if self:GetIsFiring() and CurTime() > self:GetNextFire() + engine.TickInterval() then
 		self:EmitSound("simple_weapons/weapons/tyrant_attackend.wav")
 		self:StopSound(self.Primary.Sound)
 
@@ -113,7 +113,7 @@ function SWEP:Think()
 end
 
 function SWEP:NPCThink()
-	if self:GetIsFiring() and CurTime() > self:GetNextPrimaryFire() + engine.TickInterval() then
+	if self:GetIsFiring() and CurTime() > self:GetNextFire() + engine.TickInterval() then
 		self:EmitSound("simple_weapons/weapons/tyrant_attackend.wav")
 		self:StopSound(self.Primary.Sound)
 
