@@ -1,5 +1,7 @@
 AddCSLuaFile()
 
+DEFINE_BASECLASS("simple_base_scoped")
+
 SWEP.Base = "simple_base_scoped"
 
 SWEP.PrintName = "Combine Sniper"
@@ -111,10 +113,6 @@ if CLIENT then
 	local beamColor = Color(0, 100, 255)
 	local spriteColor = Color(50, 190, 255)
 
-	function SWEP:ShouldHideCrosshair()
-		return true
-	end
-
 	function SWEP:ShouldDrawBeam()
 		if self:GetLowered() or not self:IsReady() then
 			return false
@@ -151,9 +149,39 @@ if CLIENT then
 		render.DrawSprite(endpos, 4, 4, spriteColor)
 	end
 
-	function SWEP:PreDrawViewModel(vm, wep, ply)
+	local scope = Material("gmod/scope")
+	local overlay = Material("effects/combine_binocoverlay")
+
+	function SWEP:DrawScope(x, y)
+		local screenW = ScrW()
+		local screenH = ScrH()
+
+		local h = screenH
+		local w = (4 / 3) * h
+
+		local dw = (screenW - w) * 0.5
+
+		surface.SetMaterial(overlay)
+		surface.SetDrawColor(255, 255, 255)
+
+		surface.DrawTexturedRect(0, 0, screenW, screenH)
+
+		surface.SetMaterial(scope)
+		surface.SetDrawColor(0, 0, 0)
+
+		surface.DrawRect(0, 0, dw, h)
+		surface.DrawRect(w + dw, 0, dw, h)
+
+		surface.DrawTexturedRect(dw, 0, w, h)
+
+		return true
+	end
+
+	function SWEP:PreDrawViewModel(vm, _, ply)
+		local shouldDraw = BaseClass.PreDrawViewModel(self, vm, self, ply)
+
 		if not self:ShouldDrawBeam() then
-			return
+			return shouldDraw
 		end
 
 		local att = vm:GetAttachment(2)
@@ -177,6 +205,8 @@ if CLIENT then
 		cam.End3D()
 
 		cam.IgnoreZ(true)
+
+		return shouldDraw
 	end
 
 	function SWEP:PostDrawTranslucentRenderables()

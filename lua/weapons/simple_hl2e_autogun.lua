@@ -117,6 +117,15 @@ if CLIENT then
 		render.DrawSprite(start, spriteSize, spriteSize, color_white)
 	end
 
+	local overlay = Material("effects/combine_binocoverlay")
+
+	function SWEP:DrawScope(x, y)
+		surface.SetMaterial(overlay)
+		surface.SetDrawColor(255, 255, 255)
+
+		surface.DrawTexturedRect(0, 0, ScrW(), ScrH())
+	end
+
 	function SWEP:PreDrawViewModel(vm, wep, ply)
 		local att = vm:GetAttachment(1) -- I don't know why but without this the beam effect breaks completely
 

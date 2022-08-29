@@ -87,3 +87,31 @@ function SWEP:DoImpactEffect(tr, dmgtype)
 
 	util.Effect("AR2Impact", effect)
 end
+
+if CLIENT then
+	local scope = Material("gmod/scope")
+	local overlay = Material("effects/combine_binocoverlay")
+
+	function SWEP:DrawScope(x, y)
+		local screenW = ScrW()
+		local screenH = ScrH()
+
+		local h = screenH
+		local w = (4 / 3) * h
+
+		local dw = (screenW - w) * 0.5
+
+		surface.SetMaterial(overlay)
+		surface.SetDrawColor(255, 255, 255)
+
+		surface.DrawTexturedRect(0, 0, screenW, screenH)
+
+		surface.SetMaterial(scope)
+		surface.SetDrawColor(0, 0, 0)
+
+		surface.DrawRect(0, 0, dw, h)
+		surface.DrawRect(w + dw, 0, dw, h)
+
+		surface.DrawTexturedRect(dw, 0, w, h)
+	end
+end
