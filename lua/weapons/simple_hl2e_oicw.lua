@@ -94,11 +94,7 @@ function SWEP:TranslateWeaponAnim(act)
 end
 
 function SWEP:CanAltFire()
-	if not self:HandleAutoRaise() or self:IsReloading() then
-		return false
-	end
-
-	if self:IsReloading() then
+	if self:HandleAutoRaise() or self:IsReloading() then
 		return false
 	end
 
