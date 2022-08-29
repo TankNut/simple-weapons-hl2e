@@ -57,7 +57,7 @@ SWEP.Primary = {
 SWEP.ViewOffset = Vector(0, 4, -4)
 
 SWEP.ScopeZoom = 3
-SWEP.ScopeSound = "NPC_CombineCamera.Click"
+SWEP.ScopeSound = "Simple_Weapons.CombineScope"
 
 game.AddParticles("particles/weapon_fx.pcf")
 PrecacheParticleSystem("Weapon_Combine_Ion_Cannon")

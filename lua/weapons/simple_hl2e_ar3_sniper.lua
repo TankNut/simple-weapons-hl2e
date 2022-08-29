@@ -55,7 +55,7 @@ SWEP.Primary = {
 SWEP.ViewOffset = Vector(0, 0, -1)
 
 SWEP.ScopeZoom = 4
-SWEP.ScopeSound = "NPC_CombineCamera.Click"
+SWEP.ScopeSound = "Simple_Weapons.CombineScope"
 
 SWEP.NPCData = {
 	Burst = {1, 1},

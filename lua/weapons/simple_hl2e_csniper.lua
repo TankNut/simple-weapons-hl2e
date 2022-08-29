@@ -1,5 +1,7 @@
 AddCSLuaFile()
 
+simple_weapons.Include("Convars")
+
 DEFINE_BASECLASS("simple_base_scoped")
 
 SWEP.Base = "simple_base_scoped"
@@ -58,7 +60,7 @@ SWEP.Primary = {
 }
 
 SWEP.ScopeZoom = 9
-SWEP.ScopeSound = "NPC_CombineCamera.Click"
+SWEP.ScopeSound = "Simple_Weapons.CombineScope"
 
 SWEP.NPCData = {
 	Burst = {1, 1},
@@ -147,6 +149,14 @@ if CLIENT then
 
 		render.SetMaterial(sprite)
 		render.DrawSprite(endpos, 4, 4, spriteColor)
+	end
+
+	function SWEP:DrawCrosshair(x, y)
+		if self:GetScopeIndex() != 0 and UseScopes:GetBool() then
+			self:DrawScope(x, y)
+		end
+
+		return true
 	end
 
 	local scope = Material("gmod/scope")
