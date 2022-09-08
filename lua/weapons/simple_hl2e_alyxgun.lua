@@ -180,6 +180,13 @@ if CLIENT then
 	end
 end
 
+function ENT:OnRestore()
+	BaseClass.OnRestore(self)
+
+	self:SetDeployStartTime(0)
+	self:SetDeployEndTime(0)
+end
+
 sound.Add({
 	name = "Simple_Weapons_AlyxGun.Reload",
 	channel = CHAN_ITEM,
