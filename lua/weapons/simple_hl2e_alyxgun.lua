@@ -180,7 +180,7 @@ if CLIENT then
 	end
 end
 
-function ENT:OnRestore()
+function SWEP:OnRestore()
 	BaseClass.OnRestore(self)
 
 	self:SetDeployStartTime(0)
