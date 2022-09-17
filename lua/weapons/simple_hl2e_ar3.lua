@@ -83,6 +83,8 @@ end
 function SWEP:OwnerChanged()
 	BaseClass.OwnerChanged(self)
 
+	self:StopSound(self.Primary.Sound)
+
 	local ply = self:GetOwner()
 
 	if IsValid(ply) and ply:IsNPC() then
