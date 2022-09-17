@@ -67,9 +67,24 @@ function SWEP:ModifyBulletTable(bullet)
 		dmginfo:ScaleDamage(self:GetDamageFalloff(tr.StartPos:Distance(tr.HitPos)))
 
 		if SERVER then
-			self:CallOnClient("DoBeamEffect", tostring(tr.HitPos))
+			net.Start("simple_hl2e_autogun")
+				net.WriteEntity(self)
+				net.WriteVector(tr.HitPos)
+			net.Broadcast()
 		end
 	end
+end
+
+if CLIENT then
+	net.Receive("simple_hl2e_autogun", function()
+		local ent = net.ReadEntity()
+
+		if not IsValid(ent) then
+			return
+		end
+
+		ent:DoBeamEffect(net.ReadVector())
+	end)
 end
 
 function SWEP:TranslateWeaponAnim(act)
