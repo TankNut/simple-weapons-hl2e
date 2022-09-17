@@ -94,6 +94,10 @@ function SWEP:OwnerChanged()
 	end
 end
 
+function SWEP:OnRemove()
+	self:StopSound(self.Primary.Sound)
+end
+
 function SWEP:EmitFireSound()
 	if not self:GetIsFiring() then
 		self:EmitSound(self.Primary.Sound)

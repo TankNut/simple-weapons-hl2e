@@ -159,15 +159,15 @@ if CLIENT then
 	end
 
 	function SWEP:PostDrawTranslucentRenderables()
-		if not self:GetOwner():ShouldDrawLocalPlayer() then
+		local ply = self:GetOwner()
+
+		if ply == LocalPlayer() and not ply:ShouldDrawLocalPlayer() then
 			return
 		end
 
 		if self:GetLowered() or not self:IsReady() then
 			return
 		end
-
-		local ply = self:GetOwner()
 
 		local att = self:GetAttachment(1)
 		local dir = (ply:GetAimVector():Angle() + ply:GetViewPunchAngles()):Forward()
