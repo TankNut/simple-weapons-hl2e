@@ -62,6 +62,9 @@ SWEP.NPCData = {
 
 list.Add("NPCUsableWeapons", {class = "simple_hl2e_arp", title = "Simple Weapons: " .. SWEP.PrintName})
 
+-- Dynamic Weapon Reverb support
+SWEP.dwr_customAmmoType = "pistol"
+
 function SWEP:DoImpactEffect(tr, dmgtype)
 	if tr.HitSky then
 		return

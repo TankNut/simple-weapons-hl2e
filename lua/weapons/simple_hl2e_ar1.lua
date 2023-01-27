@@ -60,6 +60,9 @@ SWEP.NPCData = {
 
 list.Add("NPCUsableWeapons", {class = "simple_hl2e_ar1", title = "Simple Weapons: " .. SWEP.PrintName})
 
+-- Dynamic Weapon Reverb support
+SWEP.dwr_customAmmoType = "smg1"
+
 function SWEP:AltFire()
 	self.Primary.Automatic = false
 
