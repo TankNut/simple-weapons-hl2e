@@ -66,18 +66,17 @@ function SWEP:SetupDataTables()
 	self:AddNetworkVar("Bool", "IsFiring")
 end
 
-function SWEP:OnDeploy()
-	BaseClass.OnDeploy(self)
+function SWEP:Deploy()
+	BaseClass.Deploy(self)
 
 	self:SetIsFiring(false)
 end
 
-function SWEP:OnHolster(removing, ply)
-	BaseClass.OnHolster(self, removing, ply)
-
+function SWEP:Holster()
 	self:SetIsFiring(false)
-
 	self:StopSound(self.Primary.Sound)
+
+	return BaseClass.Holster(self)
 end
 
 function SWEP:OwnerChanged()
