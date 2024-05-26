@@ -110,6 +110,18 @@ if CLIENT then
 		["$vertexcolor"] = 1
 	})
 
+	function SWEP:ShouldDrawBeam()
+		if self:GetLowered() or not self:IsReady() then
+			return false
+		end
+
+		if self:IsEmpty() or self:IsReloading() then
+			return false
+		end
+
+		return true
+	end
+
 	function SWEP:DrawBeam(start, endpos, view)
 		local length = start:Distance(endpos)
 		local beamSize = 5
@@ -144,7 +156,7 @@ if CLIENT then
 	function SWEP:PreDrawViewModel(vm, wep, ply)
 		local att = vm:GetAttachment(1) -- I don't know why but without this the beam effect breaks completely
 
-		if self:GetLowered() or not self:IsReady() then
+		if not self:ShouldDrawBeam() then
 			return
 		end
 
@@ -180,7 +192,7 @@ if CLIENT then
 			return
 		end
 
-		if self:GetLowered() or not self:IsReady() then
+		if not self:ShouldDrawBeam() then
 			return
 		end
 

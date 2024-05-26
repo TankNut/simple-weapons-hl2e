@@ -56,7 +56,8 @@ SWEP.Primary = {
 	},
 
 	Sound = "NPC_Sniper.FireBullet",
-	TracerName = "AirboatGunTracer"
+	TracerName = "AirboatGunTracer",
+	TracerFrequency = 1
 }
 
 SWEP.ScopeZoom = 9

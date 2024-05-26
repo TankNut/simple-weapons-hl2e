@@ -64,9 +64,9 @@ list.Add("NPCUsableWeapons", {class = "simple_hl2e_alyxgun", title = "Simple Wea
 function SWEP:SetupDataTables()
 	BaseClass.SetupDataTables(self)
 
-	self:AddNetworkVar("Bool", "Deployed")
-	self:AddNetworkVar("Float", "DeployStartTime")
-	self:AddNetworkVar("Float", "DeployEndTime")
+	self:NetworkVar("Bool", "Deployed")
+	self:NetworkVar("Float", "DeployStartTime")
+	self:NetworkVar("Float", "DeployEndTime")
 end
 
 function SWEP:CanAltFire()

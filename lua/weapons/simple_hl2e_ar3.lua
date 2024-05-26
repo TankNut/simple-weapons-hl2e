@@ -63,7 +63,7 @@ list.Add("NPCUsableWeapons", {class = "simple_hl2e_ar3", title = "Simple Weapons
 function SWEP:SetupDataTables()
 	BaseClass.SetupDataTables(self)
 
-	self:AddNetworkVar("Bool", "IsFiring")
+	self:NetworkVar("Bool", "IsFiring")
 end
 
 function SWEP:Deploy()
