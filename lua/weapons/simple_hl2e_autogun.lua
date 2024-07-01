@@ -196,16 +196,24 @@ if CLIENT then
 			return
 		end
 
+		local origin = ply:GetShootPos()
+		local pos = origin
+
 		local att = self:GetAttachment(1)
+
+		if att then
+			pos = att.Pos
+		end
+
 		local dir = (ply:GetAimVector():Angle() + ply:GetViewPunchAngles()):Forward()
 
 		local tr = util.TraceLine({
-			start = ply:GetShootPos(),
-			endpos = ply:GetShootPos() + dir * 56756,
+			start = origin,
+			endpos = origin + dir * 56756,
 			filter = {ply},
 			mask = MASK_SHOT
 		})
 
-		self:DrawBeam(att.Pos, tr.HitPos)
+		self:DrawBeam(pos, tr.HitPos)
 	end
 end
