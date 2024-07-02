@@ -46,7 +46,7 @@ SWEP.Primary = {
 		Ratio = 0.2
 	},
 
-	Sound = "NPC_Hunter.FlechetteShootLoop",
+	Sound = "Simple_Weapons_AR3.Loop",
 	TracerName = "AirboatGunTracer"
 }
 
@@ -140,3 +140,11 @@ end
 function SWEP:DoImpactEffect(tr, dmgtype)
 	self:DoAR2Impact(tr)
 end
+
+sound.Add({
+	name = "Simple_Weapons_AR3.Loop",
+	channel = CHAN_STATIC,
+	volume = 1,
+	level = 130,
+	sound = "^simple_weapons/weapons/hunter_fire_loop3.wav"
+})
