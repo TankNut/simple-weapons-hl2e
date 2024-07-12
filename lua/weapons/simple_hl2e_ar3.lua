@@ -70,6 +70,8 @@ function SWEP:Deploy()
 	BaseClass.Deploy(self)
 
 	self:SetIsFiring(false)
+
+	return true
 end
 
 function SWEP:Holster()
