@@ -79,7 +79,7 @@ if CLIENT then
 	net.Receive("simple_hl2e_autogun", function()
 		local ent = net.ReadEntity()
 
-		if not IsValid(ent) then
+		if not IsValid(ent) or not ent.DoBeamEffect then
 			return
 		end
 
